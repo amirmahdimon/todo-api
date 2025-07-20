@@ -14,22 +14,23 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-//connect to database
-
+// اتصال به دیتابیس
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log("Connected to MongoDB");
 }).catch((err) => {
   console.error("Error connecting to MongoDB:", err);
 });
 
-//test 
-
+// تست سرور
 app.get('/', (req, res) => {
   res.send("API IS working");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// روت‌ها
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+
+// ران کردن سرور روی همه‌ی IP ها
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on http://0.0.0.0:${PORT}`);
+});
